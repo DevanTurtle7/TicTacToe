@@ -1,7 +1,6 @@
 package com.devankav.tictactoe
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
@@ -30,10 +29,7 @@ class MainActivity : AppCompatActivity() {
             button.setOnClickListener(View.OnClickListener { view ->
                 val row: Int
                 val column: Int
-
                 val name = view.tag.toString()
-
-                Log.v(TAG, name)
 
                 row = when (name) {
                     "button1" -> 0
@@ -61,8 +57,12 @@ class MainActivity : AppCompatActivity() {
                     else -> 0
                 }
 
-                Log.v(TAG, row.toString() + ", " + column.toString())
                 board.takeTile(row, column)
+
+                val tileSymbol = board.getSymbol(row, column)
+                val button: Button = view as Button
+
+                button.setText(tileSymbol.toString())
             })
         }
     }
