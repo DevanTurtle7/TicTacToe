@@ -84,7 +84,11 @@ class MainActivity : AppCompatActivity() {
             // TODO: Implement Winner/Tie text
             R.string.x_win
         } else {
-            if (board.getCurrentSymbol() == Tile.X) R.string.x_turn else R.string.o_turn
+            if (board.getCurrentSymbol() == Tile.X) {
+                R.string.x_turn
+            } else {
+                R.string.o_turn
+            }
         }
 
         gameStateLabel.setText(currentText)

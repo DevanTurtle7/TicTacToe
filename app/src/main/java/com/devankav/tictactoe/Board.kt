@@ -14,6 +14,8 @@ class Board {
 
     fun gameOver(): Boolean {
         // TODO: Implement game over state
+
+        // Tile.EMPTY in board[0]
         return false
     }
 
