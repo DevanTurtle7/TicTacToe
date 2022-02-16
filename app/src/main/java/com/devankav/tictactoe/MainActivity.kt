@@ -1,7 +1,6 @@
 package com.devankav.tictactoe
 
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -13,24 +12,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        
-        board.resetBoard()
-        updateGameStateLabel()
+        resetGame()
 
-        val buttons = listOf<Button>(
-            findViewById(R.id.button1),
-            findViewById(R.id.button2),
-            findViewById(R.id.button3),
-            findViewById(R.id.button4),
-            findViewById(R.id.button5),
-            findViewById(R.id.button6),
-            findViewById(R.id.button7),
-            findViewById(R.id.button8),
-            findViewById(R.id.button9),
-        )
+        val resetButton: Button = findViewById(R.id.resetButton)
+        resetButton.setOnClickListener {
+            resetGame()
+        }
 
+        val buttons = getButtons()
         buttons.forEach { button ->
-            button.setOnClickListener(View.OnClickListener { view ->
+            button.setOnClickListener { view ->
                 val row: Int
                 val column: Int
                 val name = view.tag.toString()
@@ -66,17 +57,30 @@ class MainActivity : AppCompatActivity() {
                 val tileSymbol = board.getSymbol(row, column)
                 val button: Button = view as Button
 
-                button.setText(tileSymbol.toString())
+                button.text = tileSymbol.toString()
                 updateGameStateLabel()
-            })
+            }
         }
     }
 
-    fun updateGameStateLabel() {
-        val gameStateLabel: TextView = findViewById(R.id.gameStateLabel)
-        val currentText: Int
+    private fun getButtons(): List<Button> {
+        return listOf(
+            findViewById(R.id.button1),
+            findViewById(R.id.button2),
+            findViewById(R.id.button3),
+            findViewById(R.id.button4),
+            findViewById(R.id.button5),
+            findViewById(R.id.button6),
+            findViewById(R.id.button7),
+            findViewById(R.id.button8),
+            findViewById(R.id.button9),
+        )
+    }
 
-        currentText = if (board.gameOver()) {
+    private fun updateGameStateLabel() {
+        val gameStateLabel: TextView = findViewById(R.id.gameStateLabel)
+
+        val currentText: Int = if (board.gameOver()) {
             // TODO: Implement Winner/Tie text
             R.string.x_win
         } else {
@@ -84,5 +88,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         gameStateLabel.setText(currentText)
+    }
+
+    private fun resetGame() {
+        board.resetBoard()
+        updateGameStateLabel()
+
+        val buttons = getButtons()
+        buttons.forEach{button ->
+            button.text = ""
+        }
     }
 }
