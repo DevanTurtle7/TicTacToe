@@ -1,5 +1,7 @@
 package com.devankav.tictactoe
 
+private const val TAG = "Board"
+
 class Board {
     private val board = arrayOf(
         arrayOf(Tile.EMPTY, Tile.EMPTY, Tile.EMPTY),
@@ -7,19 +9,29 @@ class Board {
         arrayOf(Tile.EMPTY, Tile.EMPTY, Tile.EMPTY)
     )
 
-    private fun tileOpen(row: Int, column: Int) = board[row][column] == Tile.EMPTY
+    private var currentSymbol: Tile = Tile.X
 
-    fun takeTile(row: Int, column: Int, tileSymbol: Tile) {
+    private fun tileOpen(row: Int, column: Int) = board[row][column] == Tile.EMPTY
+    private fun toggleSymbol() {
+        currentSymbol = if (currentSymbol == Tile.X) Tile.O else Tile.X
+    }
+
+    fun takeTile(row: Int, column: Int) {
         if (tileOpen(row, column)) {
-            board[row][column] = tileSymbol
+            board[row][column] = currentSymbol
+            toggleSymbol()
         }
     }
 
-    fun clearTable() {
+    fun resetBoard() {
         for (row: Array<Tile> in board) {
             for (i in 0..2) {
                 row[i] = Tile.EMPTY
             }
         }
+
+        currentSymbol = Tile.X
     }
+
+    fun getSymbol(row: Int, column: Int) = board[row][column]
 }

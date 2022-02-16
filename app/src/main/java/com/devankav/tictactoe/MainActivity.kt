@@ -7,6 +7,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 
 private const val TAG = "MainActivity"
+private val board = Board()
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,10 +26,43 @@ class MainActivity : AppCompatActivity() {
             findViewById(R.id.button9),
         )
 
-        buttons.forEach {button ->
+        buttons.forEach { button ->
             button.setOnClickListener(View.OnClickListener { view ->
-                val id = view.id
-                Log.v(TAG, resources.getResourceName(id))
+                val row: Int
+                val column: Int
+
+                val name = view.tag.toString()
+
+                Log.v(TAG, name)
+
+                row = when (name) {
+                    "button1" -> 0
+                    "button2" -> 0
+                    "button3" -> 0
+                    "button4" -> 1
+                    "button5" -> 1
+                    "button6" -> 1
+                    "button7" -> 2
+                    "button8" -> 2
+                    "button9" -> 2
+                    else -> 0
+                }
+
+                column = when (name) {
+                    "button1" -> 0
+                    "button2" -> 1
+                    "button3" -> 2
+                    "button4" -> 0
+                    "button5" -> 1
+                    "button6" -> 2
+                    "button7" -> 0
+                    "button8" -> 1
+                    "button9" -> 2
+                    else -> 0
+                }
+
+                Log.v(TAG, row.toString() + ", " + column.toString())
+                board.takeTile(row, column)
             })
         }
     }
