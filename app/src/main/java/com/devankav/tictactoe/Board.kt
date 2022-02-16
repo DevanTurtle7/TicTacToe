@@ -8,10 +8,17 @@ class Board {
         arrayOf(Tile.EMPTY, Tile.EMPTY, Tile.EMPTY),
         arrayOf(Tile.EMPTY, Tile.EMPTY, Tile.EMPTY)
     )
-
     private var currentSymbol: Tile = Tile.X
 
     private fun tileOpen(row: Int, column: Int) = board[row][column] == Tile.EMPTY
+
+    fun gameOver(): Boolean {
+        // TODO: Implement game over state
+        return false
+    }
+
+    fun getCurrentSymbol() = currentSymbol
+
     private fun toggleSymbol() {
         currentSymbol = if (currentSymbol == Tile.X) Tile.O else Tile.X
     }

@@ -3,6 +3,7 @@ package com.devankav.tictactoe
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 private const val TAG = "MainActivity"
@@ -12,7 +13,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        
         board.resetBoard()
+        updateGameStateLabel()
 
         val buttons = listOf<Button>(
             findViewById(R.id.button1),
@@ -64,7 +67,22 @@ class MainActivity : AppCompatActivity() {
                 val button: Button = view as Button
 
                 button.setText(tileSymbol.toString())
+                updateGameStateLabel()
             })
         }
+    }
+
+    fun updateGameStateLabel() {
+        val gameStateLabel: TextView = findViewById(R.id.gameStateLabel)
+        val currentText: Int
+
+        currentText = if (board.gameOver()) {
+            // TODO: Implement Winner/Tie text
+            R.string.x_win
+        } else {
+            if (board.getCurrentSymbol() == Tile.X) R.string.x_turn else R.string.o_turn
+        }
+
+        gameStateLabel.setText(currentText)
     }
 }
