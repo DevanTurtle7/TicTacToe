@@ -15,6 +15,17 @@ class Board {
     fun gameOver(): Boolean {
         // TODO: Implement game over state
 
+        // Check horiz and vert
+        for (y in 0..2) {
+            val row = board[y]
+
+            if (Tile.EMPTY !in row) {
+                if ((Tile.O !in row) xor (Tile.X !in row)) {
+                    return true
+                }
+            }
+        }
+
         // Tile.EMPTY in board[0]
         return false
     }
