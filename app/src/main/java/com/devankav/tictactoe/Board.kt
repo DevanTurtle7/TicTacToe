@@ -12,22 +12,37 @@ class Board {
 
     private fun tileOpen(row: Int, column: Int) = board[row][column] == Tile.EMPTY
 
-    fun gameOver(): Boolean {
+    fun getGameState(): GameState {
         // TODO: Implement game over state
 
-        // Check horiz and vert
-        for (y in 0..2) {
-            val row = board[y]
+        var emptySpaceFound: Boolean = false
+
+        // Check horiz
+        for (i in 0..2) {
+            val row = board[i]
 
             if (Tile.EMPTY !in row) {
-                if ((Tile.O !in row) xor (Tile.X !in row)) {
-                    return true
+                if ((Tile.X in row) && (Tile.O !in row)) {
+                    return GameState.WINNER_X
+                } else if ((Tile.X !in row) && (Tile.O in row)) {
+                    return GameState.WINNER_O
                 }
+            } else {
+                emptySpaceFound = true
             }
+
+            // TODO: Can do diagnal by doing row[i][i] and vertical by adding another for loop
         }
 
-        // Tile.EMPTY in board[0]
-        return false
+        return if (emptySpaceFound) {
+            if (currentSymbol == Tile.X) {
+                GameState.X_TURN
+            } else {
+                GameState.O_TURN
+            }
+        } else {
+            GameState.WINNER_TIE
+        }
     }
 
     fun getCurrentSymbol() = currentSymbol

@@ -80,15 +80,13 @@ class MainActivity : AppCompatActivity() {
     private fun updateGameStateLabel() {
         val gameStateLabel: TextView = findViewById(R.id.gameStateLabel)
 
-        val currentText: Int = if (board.gameOver()) {
-            // TODO: Implement Winner/Tie text
-            R.string.x_win
-        } else {
-            if (board.getCurrentSymbol() == Tile.X) {
-                R.string.x_turn
-            } else {
-                R.string.o_turn
-            }
+        val currentText: Int = when (board.getGameState()) {
+            GameState.X_TURN -> R.string.x_turn
+            GameState.O_TURN -> R.string.o_turn
+            GameState.WINNER_X -> R.string.x_win
+            GameState.WINNER_O -> R.string.o_win
+            GameState.WINNER_TIE -> R.string.tie
+            else -> R.string.x_turn
         }
 
         gameStateLabel.setText(currentText)
